@@ -1,0 +1,7 @@
+@function font-lineheight($size) {
+
+  @if map-has-key($font-lineheights, $size) {
+    @return map-get($font-lineheights, $size);
+  }
+
+}

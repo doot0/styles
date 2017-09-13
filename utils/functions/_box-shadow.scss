@@ -1,0 +1,7 @@
+@function box-shadow($depth) {
+
+  @if map-has-key($shadows, $depth) {
+    @return map-get($shadows, $depth);
+  }
+
+}

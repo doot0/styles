@@ -1,0 +1,248 @@
+// Grid generator
+$_cols: $grid-cols;
+
+$_debug-grid: false;
+$_debug-rows: false;
+$_debug-cols: false;
+
+$_gutter-width: em(16);
+$_margin-width: em(16);
+
+// Grid item
+@mixin _grid-item {
+  padding-left: $_gutter-width;
+  padding-right: $_gutter-width;
+  box-sizing: border-box;
+}
+
+// Breakpoint generator
+@mixin breakpoint($lower: null, $upper: null) {
+
+  $_only-upper: null;
+  $_only-lower: null;
+  $_lower: map-get($breakpoints, $lower);
+  $_upper: map-get($breakpoints, $upper);
+
+  @if ($lower != null) and ($upper == null) { $_only-lower: true; }
+  @if ($lower == null) and ($upper != null) { $_only-upper: true; }
+
+  @if ($lower != null) and ($upper != null) {
+
+    @if map-has-key($breakpoints, $lower) and map-has-key($breakpoints, $upper) {
+      @media (min-width: $_lower) and (max-width: $_upper) { 
+        @content;
+      }
+    }
+
+  } @else {
+
+    @if ($_only-lower) {
+      @if map-has-key($breakpoints, $lower) {
+        @media (min-width: $_lower) { 
+          @content; 
+        }
+      }
+    }
+
+    @if ($_only-upper) {
+      @if map-has-key($breakpoints, $upper) {
+        @media (max-width: $_upper) { 
+          @content; 
+        }
+      }
+    }
+
+  }
+}
+
+// The good stuff
+.o-grid {
+
+  @if $_debug-grid {
+    outline: 2px solid red;
+    position: relative;
+    &:after {
+      pointer-events: none;
+      content: 'grid_debug';
+      text-align: left;
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(255,0,0,.2);
+    }
+  }
+
+  margin-left: $_margin-width;
+  margin-right: $_margin-width;
+
+  &--gutterless {
+
+    margin-left: 0;
+    margin-right: 0;
+
+    @each $breakpoint, $grid-width in $breakpoints {
+      &-#{$breakpoint} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+  }
+
+  &__row {
+    
+    @if $_debug-rows {
+      outline: 2px solid orange;
+      position: relative;
+      &:after {
+        pointer-events: none;
+        content: 'row_debug';
+        text-align: left;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,165,0,.2);
+      }
+    }
+    
+    margin-right: - $_gutter-width;
+    margin-left: - $_gutter-width;
+
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &--gutterless {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    &--reverse {
+      flex-direction: row-reverse;
+
+      @each $breakpoint, $grid-width in $breakpoints {
+        @include breakpoint($breakpoint) {
+          &-#{$breakpoint} {
+            flex-direction: row-reverse;
+          }
+        }
+      }
+
+    }
+    
+    &--align-center {
+      align-items: center;
+
+      @each $breakpoint, $grid-width in $breakpoints {
+        @include breakpoint($breakpoint) {
+          &-#{$breakpoint} {
+            align-items: center;
+          }
+        }
+      }
+    }
+    
+    &--justify-center {
+      justify-content: center;
+      
+      @each $breakpoint, $grid-width in $breakpoints {
+        @include breakpoint($breakpoint) {
+          &-#{$breakpoint} {
+            justify-content: center;
+          }
+        }
+      }
+      
+    }
+
+    & & {
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+  }
+
+  &__item {
+
+    @if $_debug-cols {
+      outline: 2px solid yellow;
+      position: relative;
+      &:after {
+        pointer-events: none;
+        content: 'col_debug';
+        text-align: left;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,255,0,.2);
+      }
+    }
+
+    @include _grid-item;
+    flex: 1;
+
+    &--gutterless {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+
+  }
+
+  @each $breakpoint, $grid-width in $breakpoints {
+
+    @include breakpoint($breakpoint) {
+
+      &--non-fluid {
+        max-width: $grid-width;
+        margin: auto;
+      }
+
+      &--non-fluid--#{$breakpoint} {
+        max-width: $grid-width;
+        margin: auto;
+      }
+
+      @for $i from 1 through $_cols {
+
+        $_width: unquote('#{100 / $_cols * $i}%');
+
+        &__item--#{$breakpoint}-#{$i} {
+          @include _grid-item;
+          
+          @if $_debug-cols {
+            outline: 2px solid yellow;
+            position: relative;
+            &:after {
+              pointer-events: none;
+              content: 'col_debug';
+              text-align: left;
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              background: rgba(255,255,0,.2);
+            }
+          }
+
+          flex: 0 0 auto;
+          flex-basis: $_width;
+          max-width: $_width;
+        }
+
+        &__item--#{$breakpoint}-push-#{$i} {
+          margin-left: $_width;
+        }
+
+      }
+    }
+  }
+
+}

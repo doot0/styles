@@ -1,0 +1,8 @@
+/* The space function should only be used on padding, margin, or top/left/right/bottom */
+@function space($size) {
+
+  @if map-has-key($spacing, $size) {
+    @return map-get($spacing, $size);
+  }
+
+}

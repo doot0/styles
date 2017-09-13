@@ -1,0 +1,11 @@
+@function color($color, $opacity : 1) {
+
+  $result: map-get($palette, $color);
+
+  @if $opacity {
+    @return rgba($result, $opacity);
+  } @else {
+    @return $result;
+  }
+
+}

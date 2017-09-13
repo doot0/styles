@@ -1,0 +1,13 @@
+@function em($px, $ctx: $base-font-px) {
+
+  @if ( unitless($px) ) {
+    $px: $px * 1px;
+  }
+
+  @if ( unitless($ctx) ) {
+    $ctx: $ctx * 1px;
+  }
+
+  @return $px / $ctx * 1em;
+
+}

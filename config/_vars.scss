@@ -1,0 +1,91 @@
+$base-font-px: 16; //px
+$grid-cols: 12;
+
+$core-palette: (
+  'purple-primary'    : #8943e5,
+  'blue-primary'      : #439be5,
+  'orange-secondary'  : #e58c43,
+  'yellow-secondary'  : #ebbc0b,
+  'green-secondary'   : #29d180,
+  'mint-secondary'    : #29d1a6,
+  'aqua-secondary'    : #29c9d1,
+  'pink-secondary'    : #e54378,
+  'red-secondary'     : #f1575f,
+  'snow-tertiary'     : #f9fbfd,
+  'smoke-tertiary'    : #f2f6f9,
+  'silver-tertiary'   : #e4eaf1,
+  'pumice-tertiary'   : #949ea7,
+  'slate-tertiary'    : #5a646f,
+  'charcoal-tertiary' : #3d4752,
+  'basalt-tertiary'   : #282c34
+);
+
+$palette: (
+  'brand'         : map-get($core-palette, 'purple-primary'),
+  'primary'       : map-get($core-palette, 'blue-primary'),
+  'lightest'      : map-get($core-palette, 'snow-tertiary'),
+  'lighter'       : map-get($core-palette, 'smoke-tertiary'),
+  'light'         : map-get($core-palette, 'silver-tertiary'),
+  'dark'          : map-get($core-palette, 'pumice-tertiary'),
+  'darker'        : map-get($core-palette, 'slate-tertiary'),
+  'darkest'       : map-get($core-palette, 'charcoal-tertiary'),
+  'blackhole'     : map-get($core-palette, 'basalt-tertiary'),
+  'positive'      : map-get($core-palette, 'green-secondary'),
+  'attention'     : map-get($core-palette, 'yellow-secondary'),
+  'negative'      : map-get($core-palette, 'red-secondary'),
+  'mint-positive' : map-get($core-palette, 'mint-secondary'),
+  'off-negative'  : map-get($core-palette, 'pink-secondary'),
+  'brand-orange'  : map-get($core-palette, 'orange-secondary'),
+  'white'         : #ffffff
+);
+
+$spacing: (
+  'xs' : 4px,
+  'sm' : 8px,
+  'md' : 16px,
+  'lg' : 32px,
+  'xl' : 64px,
+  'xxl' : 128px
+);
+
+$font-families: (
+  'body'    : ('source-sans-pro', 'Source Sans Pro', sans-serif),
+  'heading' : ('sofia-pro', 'Sofia Pro', sans-serif),
+  'code'    : ('source-code-pro', 'Source Code Pro', monospace),
+  'zh'      : ('Source Han Sans', 'Microsoft Yahei', '微软雅黑', 'STXihei', '华文细黑', sans-serif)
+);
+
+$font-sizes: (
+  'h0': 36px,
+  'h1': 32px,
+  'h2': 28px,
+  'h3': 24px,
+  'h4': 18px,
+  'h5': 12px,
+  'body': 14px,
+  'paragraph': 16px
+);
+
+$font-lineheights: (
+  'h0': 48px,
+  'h1': 40px,
+  'h2': 36px,
+  'h3': 32px,
+  'h4': 28px,
+  'h5': 16px,
+  'body': 20px,
+  'paragraph': 24px
+);
+
+$shadows: (
+  'xs': 0 1px 2px transparentize(map-get($palette, 'darkest'), .9),
+  'sm': 0 2px 4px transparentize(map-get($palette, 'darkest'), .9),
+  'lg': 0 6px 12px transparentize(map-get($palette, 'darkest'), .9),
+  'xl': 0 24px 32px transparentize(map-get($palette, 'darkest'), .9)
+);
+
+$breakpoints: (
+  'sm': em(240),
+  'md': em(360),
+  'lg': em(768)
+);
